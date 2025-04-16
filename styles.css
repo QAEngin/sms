@@ -1,0 +1,281 @@
+/* Container for layout */
+.container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 70px auto 0 auto;
+    padding: 0 15px; /* 🧠 Padding for mobile spacing */
+    box-sizing: border-box;
+  }
+  
+  
+  /* Sticky top bar: search + button */
+  .sticky-controls {
+    position: sticky;
+    top: 0;
+    background-color: #f5f5f5;
+    padding: 10px 15px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+    z-index: 100;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .dark-mode .sticky-controls {
+    background-color: #121212;
+    border-bottom: 1px solid #444;
+  }
+  
+  /* Sticky table header */
+  thead th {
+    position: sticky;
+    top: 56px; /* Height of sticky-controls */
+    background-color: #ffffff;
+    z-index: 90;
+  }
+  
+  .dark-mode thead th {
+    background-color: #1e1e1e;
+  }
+  
+  /* Table styling */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0;
+  }
+  
+  th, td {
+    padding: 12px;
+    text-align: right;
+    border: 1px solid #ddd;
+  }
+  
+  /* Search + button */
+  #toggle-theme {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+  
+  #search {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    min-width: 250px;
+    border: 1px solid #ccc;
+  }
+  
+  /* Status colors */
+  .status-בוצע {
+    background-color: #a8e6a3;
+  }
+  .status-ממתין {
+    background-color: #fff9a6;
+  }
+  
+  /* Dark mode */
+  .dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+  }
+  .dark-mode table {
+    border-color: #444;
+  }
+  .dark-mode th, .dark-mode td {
+    border: 1px solid #444;
+  }
+  .dark-mode #search {
+    background-color: #2a2a2a;
+    color: #ffffff;
+    border: 1px solid #555;
+  }
+/* ✅ Navbar */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+  }
+  
+  /* ✅ Sticky search bar + button */
+  .sticky-controls {
+    position: sticky;
+    top: 56px; /* right after navbar height */
+    z-index: 999;
+    background-color: #f5f5f5;
+    padding: 10px 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .dark-mode .sticky-controls {
+    background-color: #121212;
+    border-bottom: 1px solid #444;
+  }
+  
+  /* Brand */
+  .navbar .navbar-brand {
+    font-size: 20px;
+    font-weight: bold;
+    color: #1976d2;
+  }
+  
+  /* ✅ Navbar Items */
+  .navbar-links {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar-links li {
+    background-color: #e3f2fd;
+    padding: 8px 14px;
+    border-radius: 6px;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  .navbar-links li:hover {
+    background-color: #bbdefb;
+    transform: translateY(-2px);
+  }
+  
+  .navbar-links li a {
+    text-decoration: none;
+    color: #0d47a1;
+    font-weight: 500;
+    font-size: 15px;
+    display: inline-block;
+  }
+  
+  /* Hamburger icon (mobile) */
+.navbar-toggle {
+    background: none;
+    border: none;
+    font-size: 26px;
+    color: #1976d2;
+    display: none;
+    cursor: pointer;
+  }
+  
+  /* Nav links */
+  .navbar-links {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar-links li {
+    background-color: #e3f2fd;
+    padding: 8px 14px;
+    border-radius: 6px;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  .navbar-links li:hover {
+    background-color: #bbdefb;
+    transform: translateY(-2px);
+  }
+  
+  .navbar-links li a {
+    text-decoration: none;
+    color: #0d47a1;
+    font-weight: 500;
+    font-size: 15px;
+  }
+  
+  /* Mobile */
+  @media (max-width: 768px) {
+    .navbar-toggle {
+      display: block;
+    }
+  
+    .navbar-links {
+      display: none;
+      flex-direction: column;
+      align-items: flex-start;
+      position: absolute;
+      top: 56px;
+      right: 0;
+      width: 100%;
+      background-color: #ffffff;
+      padding: 10px 15px;
+    }
+  
+    .navbar-links.show {
+      display: flex;
+    }
+  
+    .navbar-links li {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+  
+  /* ✅ Dark Mode Navbar */
+  .dark-mode .navbar {
+    background-color: #1f1f1f;
+    color: #ffffff;
+    border-bottom: none;
+    box-shadow: none;
+  }
+  
+  .dark-mode .navbar .navbar-brand {
+    color: #90caf9;
+  }
+  
+  .dark-mode .navbar-links li {
+    background-color: #333;
+  }
+  
+  .dark-mode .navbar-links li:hover {
+    background-color: #444;
+  }
+  
+  .dark-mode .navbar-links li a {
+    color: #90caf9;
+  }
+  .table-wrapper {
+    overflow-x: auto;
+  }
+  /* ✅ Table header sticky - starts after navbar + search (56 + ~60 = 116px) */
+thead th {
+    position: sticky;
+    top: 10px;
+    background-color: #fff;
+    z-index: 800;
+  }
+  
+  .dark-mode thead th {
+    background-color: #1e1e1e;
+  }
+    
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 12px;
+    text-align: right;
+    border: 1px solid #ddd;
+  }
+  
+  /* ✅ Responsive Container */
+  .container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 15px;
+    box-sizing: border-box;
+  }
