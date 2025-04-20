@@ -38,7 +38,7 @@ function renderTable(data) {
     tr.innerHTML = `
       <td>${row[0]}</td>  <!-- שם העסק -->
       <td>${row[1]}</td>  <!-- חפ -->
-      <td>${row[2]}</td>  <!-- איש קשר -->
+      <td>${maskContact(row[2])}</td>  <!-- איש קשר -->
       <td>${row[3]}</td>  <!-- סטטוס -->
     `;
     tableBody.appendChild(tr);
@@ -69,4 +69,24 @@ document.addEventListener('DOMContentLoaded', function () {
       navbarLinks.classList.toggle('show');
     });
   });
-  
+  function maskContact(contact) {
+  // Regular expression to find a phone number pattern (with optional dash)
+  const phoneRegex = /(\d{3,4}[-]?\d{5,7})/;
+
+  return contact.replace(phoneRegex, match => {
+    // Remove dashes for clean masking
+    const clean = match.replace(/-/g, '');
+
+    if (clean.length <= 4) {
+      return '*'.repeat(clean.length);
+    }
+
+    const masked = '****' + clean.slice(4);
+
+    // Reinsert dash if it was there originally (optional)
+    return match.includes('-')
+      ? masked.slice(0, 3) + '-' + masked.slice(3)
+      : masked;
+  });
+}
+
