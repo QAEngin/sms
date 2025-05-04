@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>פיצ'רים</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+  <link rel="shortcut icon" type="x-icon" href="https://img.icons8.com/?size=100&id=VUcAVkQlpcO4&format=png&color=000000">
+</head>
+<body>
+      <!-- ✅ Navbar -->
+    <nav class="navbar">
+    <div class="navbar-brand">Records</div>
+    <button class="navbar-toggle" id="navbar-toggle">&#9776;</button>
+    <ul class="navbar-links" id="navbar-links">
+      <li><a href="index.html">SMS</a></li>
+      <li><a href="bot.html">מוקד בוט</a></li>
+      <li><a href="record.html">הקלטת פתיח</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <!-- Sticky top controls -->
+    <div class="sticky-controls">
+      <button id="toggle-theme">החלף מצב תצוגה</button>
+      <input type="text" id="search" placeholder="חפש לפי:שם העסק/חפ/איש קשר/סטטוס" />
+    </div>
+
+    <!-- Data Table -->
+    <div class="table-wrapper">
+      <table id="data-table">
+        <thead>
+          <tr>
+            <th>שם העסק</th>
+            <th>חפ</th>
+            <th>איש קשר</th>
+            <th>סטטוס</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="record.js"></script>
+  
+</body>
+</html>
