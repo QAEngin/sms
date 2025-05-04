@@ -14,17 +14,17 @@ async function loadCSVData() {
     // Remove header row
     rows.shift();
   
-    // Map and filter
-    allRows = rows
-      .map(row => [
-        row[7]?.trim() || '', // שם העסק
-        row[8]?.trim() || '', // חפ
-        row[6]?.trim() || '', // איש קשר
-        row[3]?.trim() || ''  // סטטוס
-      ])
-      .filter(row =>
-        row.some(cell => cell !== '') // remove if all fields are empty
-      );
+     // Map and filter with masking
+allRows = rows
+.map(row => [
+  row[7]?.trim() || '',              // שם העסק
+  maskFirst4(row[8]?.trim() || ''),  // חפ (masked)
+  maskFirst4(row[6]?.trim() || ''),  // איש קשר (masked)
+  row[3]?.trim() || ''               // סטטוס
+])
+.filter(row =>
+  row.some(cell => cell !== '') // remove if all fields are empty
+);
   
     renderTable(allRows);
   }
