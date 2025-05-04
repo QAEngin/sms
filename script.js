@@ -30,21 +30,36 @@ async function loadCSVData() {
   }
 
 function renderTable(data) {
-  tableBody.innerHTML = '';
-  data.forEach(row => {
-    const status = row[3].trim(); // סטטוס
-    const tr = document.createElement('tr');
-    tr.classList.add(`status-${status}`);
-    tr.innerHTML = `
-      <td>${row[0]}</td>  <!-- שם העסק -->
-      <td>${maskContact(row[1])}</td>  <!-- חפ -->
-      <td>${maskContact(row[2])}</td>  <!-- איש קשר -->
-      <td>${row[3]}</td>  <!-- סטטוס -->
-    `;
-    tableBody.appendChild(tr);
-  });
-}
-
+    tableBody.innerHTML = '';
+    data.forEach(row => {
+      const status = row[3]; // assuming סטטוס is at index 3
+      let statusColor = '';
+  
+      switch (status) {
+        case 'בוצע':
+          statusColor = 'green';
+          break;
+        case 'ממתין':
+          statusColor = 'goldenrod';
+          break;
+        case 'לא הועבר נוסח':
+          statusColor = 'Brown';
+          break;
+          case 'בוטל':
+          statusColor = 'red';
+          break;
+      }
+  
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${row[0]}</td>
+        <td>${row[1]}</td>
+        <td>${row[2]}</td>
+        <td style="background-color: ${statusColor}; color: white;">${row[3]}</td>
+      `;
+      tableBody.appendChild(tr);
+    });
+  }
 // Search
 searchInput.addEventListener('input', () => {
   const query = searchInput.value.toLowerCase();
