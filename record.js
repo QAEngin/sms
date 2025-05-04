@@ -51,9 +51,12 @@ function renderTable(data) {
       case 'בתהליך':
         statusColor = 'goldenrod';
         break;
-      case 'בוטל':
+      case 'לא מעוניין':
         statusColor = 'red';
         break;
+        case 'נשלחה הודעה':
+          statusColor = 'CornflowerBlue';
+          break;
     }
 
     const tr = document.createElement('tr');
@@ -91,4 +94,3 @@ document.addEventListener('DOMContentLoaded', function () {
       navbarLinks.classList.toggle('show');
     });
   });
-  
