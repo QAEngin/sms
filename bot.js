@@ -1,17 +1,4 @@
-const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTCPt2128NhVQ1j_QbAuQMdkuUohM07yFXs_eQnE9vrj9YIDD0IuMSloBl94b6oeHAra5-fXiUbsVPa/pub?gid=70328878&single=true&output=csv";
-
-// Everything else stays the same:
-fetch(SHEET_CSV_URL)
-  .then((response) => response.text())
-  .then((data) => {
-    const rows = Papa.parse(data, { header: true }).data;
-    const filteredRows = rows.filter(row =>
-      row["שם העסק"] || row["חפ"] || row["איש קשר"] || row["סטטוס"]
-    );
-    renderTable(filteredRows);
-    addSearchFunctionality(filteredRows);
-  });
-
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRR2dbI8ou1w1zEd-cRf_fNq90WzdCQ96ZqqMz4IDjJFMaLShw5w2BBDYu6hVmuO1kH1GBNOWAeONNs/pub?gid=1142500467&single=true&output=csv";
 
 const tableBody = document.querySelector('#data-table tbody');
 const searchInput = document.getElementById('search');
@@ -19,46 +6,65 @@ const toggleThemeBtn = document.getElementById('toggle-theme');
 
 let allRows = [];
 
+// Load and process CSV
 async function loadCSVData() {
-    const response = await fetch(SHEET_CSV_URL);
-    const text = await response.text();
-    const rows = text.trim().split('\n').map(row => row.split(','));
-  
-    // Remove header row
-    rows.shift();
-  
-    // Map and filter
-    allRows = rows
-      .map(row => [
-        row[7]?.trim() || '', // שם העסק
-        row[8]?.trim() || '', // חפ
-        row[6]?.trim() || '', // איש קשר
-        row[3]?.trim() || ''  // סטטוס
-      ])
-      .filter(row =>
-        row.some(cell => cell !== '') // remove if all fields are empty
-      );
-  
-    renderTable(allRows);
-  }
+  const response = await fetch(SHEET_CSV_URL);
+  const text = await response.text();
+  const rows = text.trim().split('\n').map(row => row.split(','));
 
+  // Remove header
+  rows.shift();
+
+  // Map columns: [0]=שם העסק, [2]=חפ, [1]=איש קשר, [7]=סטטוס
+  allRows = rows
+    .map(row => [
+      row[0]?.trim() || '', // שם העסק
+      row[2]?.trim() || '', // חפ
+      row[1]?.trim() || '', // איש קשר
+      row[7]?.trim() || ''  // סטטוס
+    ])
+    .filter(row => row.some(cell => cell !== ''));
+
+  renderTable(allRows);
+}
+
+// Render table with color-coded status cell
 function renderTable(data) {
   tableBody.innerHTML = '';
   data.forEach(row => {
-    const status = row[3].trim(); // סטטוס
+    const status = row[3];
+    let statusColor = '';
+
+    switch (status) {
+      case 'בוצע':
+        statusColor = 'green';
+        break;
+      case 'בתהליך':
+        statusColor = 'goldenrod';
+        break;
+      case 'לא מעוניין':
+        statusColor = 'red';
+        break;
+        case 'לא רלוונטי':
+        statusColor = 'darkred';
+        break;
+      case 'נשלחה הודעה':
+        statusColor = 'CornflowerBlue';
+        break;
+    }
+
     const tr = document.createElement('tr');
-    tr.classList.add(`status-${status}`);
     tr.innerHTML = `
       <td>${row[0]}</td>  <!-- שם העסק -->
-      <td>${maskContact(row[1])}</td>  <!-- חפ -->
-      <td>${maskContact(row[2])}</td>  <!-- איש קשר -->
-      <td>${row[3]}</td>  <!-- סטטוס -->
+      <td>${row[1]}</td>  <!-- חפ -->
+      <td>${row[2]}</td>  <!-- איש קשר -->
+      <td style="background-color: ${statusColor}; color: white;">${row[3]}</td>  <!-- סטטוס -->
     `;
     tableBody.appendChild(tr);
   });
 }
 
-// Search
+// Search filter
 searchInput.addEventListener('input', () => {
   const query = searchInput.value.toLowerCase();
   const filtered = allRows.filter(row =>
@@ -67,39 +73,19 @@ searchInput.addEventListener('input', () => {
   renderTable(filtered);
 });
 
-// Dark mode
+// Dark mode toggle
 toggleThemeBtn.addEventListener('click', () => {
   document.body.classList.toggle('dark-mode');
 });
 
-loadCSVData();
-// Navbar toggle for mobile
+// Mobile nav toggle
 document.addEventListener('DOMContentLoaded', function () {
-    const navbarToggle = document.getElementById('navbar-toggle');
-    const navbarLinks = document.getElementById('navbar-links');
-  
-    navbarToggle.addEventListener('click', () => {
-      navbarLinks.classList.toggle('show');
-    });
+  const navbarToggle = document.getElementById('navbar-toggle');
+  const navbarLinks = document.getElementById('navbar-links');
+
+  navbarToggle.addEventListener('click', () => {
+    navbarLinks.classList.toggle('show');
   });
-function maskContact(contact) {
-  // Regular expression to find a phone number pattern (with optional dash)
-  const phoneRegex = /(\d{3,4}[-]?\d{5,7})/;
+});
 
-  return contact.replace(phoneRegex, match => {
-    // Remove dashes for clean masking
-    const clean = match.replace(/-/g, '');
-
-    if (clean.length <= 4) {
-      return '*'.repeat(clean.length);
-    }
-
-    const masked = '****' + clean.slice(4);
-
-    // Reinsert dash if it was there originally (optional)
-    return match.includes('-')
-      ? masked.slice(0, 3) + '-' + masked.slice(3)
-      : masked;
-  });
-}
-  
+loadCSVData();
