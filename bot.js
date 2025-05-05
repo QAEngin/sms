@@ -27,7 +27,10 @@ async function loadCSVData() {
 
   renderTable(allRows);
 }
-
+// Utility to mask first 4 digits
+function maskFirst4(str) {
+  return str.length > 4 ? '****' + str.slice(4) : str;
+}
 // Render table with color-coded status cell
 function renderTable(data) {
   tableBody.innerHTML = '';
