@@ -27,10 +27,12 @@ async function loadCSVData() {
 
   renderTable(allRows);
 }
+
 // Utility to mask first 4 digits
 function maskFirst4(str) {
   return str.length > 4 ? '****' + str.slice(4) : str;
 }
+
 // Render table with color-coded status cell
 function renderTable(data) {
   tableBody.innerHTML = '';
@@ -48,7 +50,7 @@ function renderTable(data) {
       case 'לא מעוניין':
         statusColor = 'red';
         break;
-        case 'לא רלוונטי':
+      case 'לא רלוונטי':
         statusColor = 'darkred';
         break;
       case 'נשלחה הודעה':
@@ -59,8 +61,8 @@ function renderTable(data) {
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${row[0]}</td>  <!-- שם העסק -->
-      <td>${row[1]}</td>  <!-- חפ -->
-      <td>${row[2]}</td>  <!-- איש קשר -->
+      <td>${maskFirst4(row[1])}</td>  <!-- חפ -->
+      <td>${maskFirst4(row[2])}</td>  <!-- איש קשר -->
       <td style="background-color: ${statusColor}; color: white;">${row[3]}</td>  <!-- סטטוס -->
     `;
     tableBody.appendChild(tr);
